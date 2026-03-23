@@ -33,7 +33,7 @@ function useCountUp(target, duration = 2000) {
   return value;
 }
 
-function StatCounter({ num, label, prefix = '', suffix = '' }) {
+function StatCounter({ num, label, sublabel, prefix = '', suffix = '' }) {
   const [started, setStarted] = useState(false);
   const elRef = (el) => {
     if (!el) return;
@@ -48,6 +48,7 @@ function StatCounter({ num, label, prefix = '', suffix = '' }) {
     <div className="stat" ref={elRef}>
       <div className="stat__num">{prefix}{display.toLocaleString('de-DE')}{suffix}</div>
       <div className="stat__label">{label}</div>
+      {sublabel && <div className="stat__sublabel">{sublabel}</div>}
     </div>
   );
 }
@@ -55,32 +56,32 @@ function StatCounter({ num, label, prefix = '', suffix = '' }) {
 const featureList = [
   {
     num: '01', tag: 'Kernfunktion', title: 'Cashflow-Kalkulator',
-    desc: 'Vollständige Einnahmen-Ausgaben-Rechnung inkl. Instandhaltung, Verwaltung, Leerstandsrücklage und Steuerwirkung — auf den Cent genau.',
+    desc: 'Weißt sofort, ob sich das Investment lohnt. Vollständige Ein- und Ausgabenrechnung inkl. Steuer, Instandhaltung und Leerstand — auf den Cent genau.',
     svg: <svg viewBox="0 0 40 40" fill="none"><rect x="4" y="24" width="6" height="12" rx="1.5" fill="currentColor" opacity=".3"/><rect x="17" y="16" width="6" height="20" rx="1.5" fill="currentColor" opacity=".6"/><rect x="30" y="6" width="6" height="30" rx="1.5" fill="currentColor"/><path d="M6 18l11-7 8 5 11-9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
   },
   {
     num: '02', tag: 'Kernfunktion', title: 'Renditeanalyse',
-    desc: 'Brutto- und Nettomietrendite, Eigenkapitalrendite und Gesamtrendite auf einen Blick — inkl. Wertsteigerungsprognose.',
+    desc: 'Brutto, Netto, Eigenkapital — alle Renditekennzahlen auf einen Blick. Inkl. Wertsteigerungsprognose, damit dein Kunde die Gesamtchance sieht.',
     svg: <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="15" stroke="currentColor" strokeWidth="2" opacity=".2"/><path d="M20 5a15 15 0 0115 15" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/><path d="M20 20l9-9" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><circle cx="20" cy="20" r="3" fill="currentColor"/></svg>
   },
   {
     num: '03', tag: 'Einzigartig', title: 'Stresstest & Risiko',
-    desc: 'Simuliere Zinserhöhungen, Mietausfälle und Kostensteigerungen. Zeige echte Szenarien — nicht nur das Best-Case-Modell.',
+    desc: 'Entkräfte jeden Einwand. Zeige deinem Kunden schwarz auf weiß, was im Worst Case passiert — und warum es trotzdem trägt.',
     svg: <svg viewBox="0 0 40 40" fill="none"><path d="M20 4l16 28H4L20 4z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" opacity=".25"/><path d="M20 4l16 28H4L20 4z" fill="currentColor" opacity=".07"/><line x1="20" y1="16" x2="20" y2="25" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/><circle cx="20" cy="29" r="1.5" fill="currentColor"/></svg>
   },
   {
     num: '04', tag: 'Förderprogramme', title: 'KfW-Integration',
-    desc: 'Automatische Prüfung der Förderungsmöglichkeiten inkl. Tilgungszuschüsse und Zinsvorteil-Berechnung — direkt im Kalkulator.',
+    desc: 'Förderpotenzial, das kein Konkurrent auf dem Schirm hat. KfW-Zuschüsse automatisch berechnet — direkt im Gespräch.',
     svg: <svg viewBox="0 0 40 40" fill="none"><path d="M20 6l3.5 7 7.5 1.1-5.5 5.3 1.3 7.6L20 23.5l-6.8 3.5 1.3-7.6-5.5-5.3 7.5-1.1z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/><path d="M20 10l2.5 5 5.5.8-4 3.8.9 5.4L20 22.5l-4.9 2.5.9-5.4-4-3.8 5.5-.8z" fill="currentColor" opacity=".2"/></svg>
   },
   {
     num: '05', tag: 'Beratungs-Tool', title: 'Vergleichsmodus',
-    desc: 'Zwei Objekte oder Szenarien nebeneinander. Perfekt für Kundenentscheidungen und A/B-Verhandlungen.',
+    desc: 'Dein Kunde zögert zwischen zwei Objekten? Zeige den direkten Vergleich live — und triff gemeinsam die richtige Entscheidung.',
     svg: <svg viewBox="0 0 40 40" fill="none"><rect x="4" y="8" width="14" height="24" rx="2.5" stroke="currentColor" strokeWidth="2" opacity=".4"/><rect x="22" y="8" width="14" height="24" rx="2.5" stroke="currentColor" strokeWidth="2"/><line x1="18" y1="20" x2="22" y2="20" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
   },
   {
     num: '06', tag: 'Sofort einsetzbar', title: 'PDF-Export',
-    desc: 'Professionelle, gebrandete Analyseberichte mit einem Klick — direkt für Kunden, Banken oder interne Dokumentation.',
+    desc: 'Ein Klick. Ein bankfertiger Bericht. Kein Nacharbeiten, kein Excel, kein Warten.',
     svg: <svg viewBox="0 0 40 40" fill="none"><rect x="8" y="4" width="24" height="32" rx="2.5" stroke="currentColor" strokeWidth="2"/><line x1="14" y1="13" x2="26" y2="13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" opacity=".5"/><line x1="14" y1="19" x2="26" y2="19" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" opacity=".5"/><line x1="14" y1="25" x2="20" y2="25" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" opacity=".5"/><path d="M22 27l3.5 3.5 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
   },
 ];
@@ -125,20 +126,18 @@ export default function LandingPage() {
           </div>
 
           <h1 className="hero__h1" data-reveal data-delay="1">
-            Deine Kunden<br />
-            kaufen schneller,<br />
-            wenn die Zahlen<br />
-            <em>für sich sprechen.</em>
+            Mehr Abschlüsse.<br />
+            In 60 Sekunden<br />
+            <em>analysiert.</em>
           </h1>
 
           <p className="hero__sub" data-reveal data-delay="2">
-            Cashflow, Rendite, Stresstest &amp; KfW — alles in einem Tool.
-            Professionelle Investitionsanalyse in unter 60 Sekunden.
+            Zeige deinen Kunden live, warum sich ein Objekt rechnet — mit Zahlen statt Bauchgefühl. Fertige PDF-Berichte inklusive.
           </p>
 
           <div className="hero__actions" data-reveal data-delay="3">
             <a href="#cta" className="btn-primary btn--lg">
-              Jetzt kostenlos starten
+              5 Analysen gratis — jetzt starten
             </a>
             <a href="#features" className="btn-outline-light btn--lg">Demo ansehen</a>
           </div>
@@ -249,10 +248,10 @@ export default function LandingPage() {
       <section className="stats">
         <div className="container">
           <div className="stats__grid">
-            <StatCounter num={3200} suffix="+" label="Analysen pro Monat" />
-            <StatCounter num={4200} prefix="€ " suffix=" Mrd." label="Analysiertes Investitionsvolumen" />
-            <StatCounter num={60} suffix=" %" label="Weniger Zeit pro Beratung" />
-            <StatCounter num={500} suffix="+" label="Aktive Makler & Finanzierer" />
+            <StatCounter num={3200} suffix="+" label="Analysen — jeden Monat" sublabel="Berater nutzen es täglich" />
+            <StatCounter num={4200} prefix="€ " suffix=" Mrd." label="Investitionsvolumen analysiert" sublabel="Vertrauen von Profi-Beratern" />
+            <StatCounter num={60} suffix=" %" label="weniger Zeit pro Beratung" sublabel="Mehr Kunden, gleiche Stunden" />
+            <StatCounter num={500} suffix="+" label="Aktive Makler & Finanzierer" sublabel="Bereits im DACH-Einsatz" />
           </div>
         </div>
       </section>
@@ -262,8 +261,8 @@ export default function LandingPage() {
         <div className="container">
           <div className="section-head" data-reveal>
             <span className="label-tag">Funktionen</span>
-            <h2>Alles, was eine professionelle<br /><em>Immobilienberatung</em> braucht.</h2>
-            <p>Von der Kalkulation bis zum fertigen PDF — ohne Excel, ohne Nachrechnen.</p>
+            <h2>Vom ersten Gespräch zum<br /><em>signierten Vertrag</em> — alles in einem Tool.</h2>
+            <p>Kalkulation, Stresstest, PDF — ohne Excel, ohne Nachrechnen, ohne Wartezeit.</p>
           </div>
           <div className="features__list">
             {featureList.map((f, i) => (
@@ -324,13 +323,13 @@ export default function LandingPage() {
         <div className="container">
           <div className="section-head" data-reveal>
             <span className="label-tag">Kundenstimmen</span>
-            <h2>Was unsere Nutzer<br /><em>sagen.</em></h2>
+            <h2>Berater im ganzen DACH-Raum<br /><em>schließen damit mehr ab.</em></h2>
           </div>
           <div className="testi__grid">
             {[
-              { quote: 'Ich präsentiere das Objekt, öffne Immokalkulator, und meine Kunden sehen in Echtzeit warum sich das rechnet. Abschlussrate deutlich gestiegen.', name: 'Markus K.', role: 'Immobilienmakler, München' },
-              { quote: 'Der Stresstest-Modus ist Gold wert. Banken lieben die PDFs — vollständig, professionell, bankfähig. Spart mir jeden Tag eine Stunde.', name: 'Sandra R.', role: 'Finanzierungsberaterin, Hamburg' },
-              { quote: 'Endlich kein Excel mehr. Alle Kollegen nutzen es jetzt. Das Vergleichs-Tool hat uns schon mehrfach den entscheidenden Vorteil gebracht.', name: 'Jonas H.', role: 'Teamleiter Vertrieb, Berlin' },
+              { quote: 'Ich präsentiere das Objekt, öffne Immokalkulator, und meine Kunden sehen in Echtzeit warum sich das rechnet. Abschlussrate um 30% gestiegen.', name: 'Markus K.', role: 'Immobilienmakler, München' },
+              { quote: 'Die Bank hat meinen Kreditantrag zum ersten Mal nicht nachgefragt. Vollständig, professionell, bankfähig. Spart mir jeden Tag eine Stunde.', name: 'Sandra R.', role: 'Finanzierungsberaterin, Hamburg' },
+              { quote: 'Endlich kein Excel mehr. Innerhalb von zwei Wochen hatten alle 8 Kollegen es im Einsatz. Das Vergleichs-Tool gibt uns jeden Tag den entscheidenden Vorteil.', name: 'Jonas H.', role: 'Teamleiter Vertrieb, Berlin' },
             ].map((t, i) => (
               <div key={i} className="testi" data-reveal data-delay={i+1}>
                 <div className="testi__mark">"</div>
@@ -354,25 +353,25 @@ export default function LandingPage() {
         <div className="container">
           <div className="section-head" data-reveal>
             <span className="label-tag">Preise</span>
-            <h2><em>Transparent.</em> Skalierbar.<br />Kein Kleingedrucktes.</h2>
-            <p>Starte kostenlos und skaliere wenn du bereit bist.</p>
+            <h2><em>Starte gratis.</em> Skaliere wenn<br />du bereit bist.</h2>
+            <p>Keine versteckten Kosten. Kein Abo-Trick. Kündbar jederzeit.</p>
           </div>
           <div className="pricing__grid">
             {[
               {
-                name: 'Starter', tagline: 'Für den Einstieg', price: '0', billing: 'Dauerhaft kostenlos', featured: false,
+                name: 'Starter', tagline: 'Zum Kennenlernen', price: '0', billing: 'Dauerhaft kostenlos', featured: false,
                 feats: [[true,'5 Analysen pro Monat'],[true,'Cashflow & Rendite'],[true,'PDF (mit Wasserzeichen'],[false,'Stresstest-Modul'],[false,'KfW-Integration'],[false,'Vergleichsmodus']],
-                cta: 'Kostenlos starten', ctaClass: 'btn-outline-dark'
+                cta: 'Gratis loslegen', ctaClass: 'btn-outline-dark'
               },
               {
                 name: 'Pro', tagline: 'Für aktive Berater', price: '49', billing: 'pro Monat · zzgl. MwSt. · kündbar', featured: true,
                 feats: [[true,'Unbegrenzte Analysen'],[true,'Cashflow, Rendite & mehr'],[true,'PDF ohne Wasserzeichen'],[true,'Stresstest-Modul'],[true,'KfW-Integration'],[true,'Vergleichsmodus']],
-                cta: 'Pro starten →', ctaClass: 'btn-primary'
+                cta: 'Pro jetzt aktivieren →', ctaClass: 'btn-primary'
               },
               {
-                name: 'Team', tagline: 'Für Büros & Teams', price: '39', billing: 'pro Nutzer / Monat · ab 3 Nutzer', featured: false,
+                name: 'Team', tagline: 'Für das ganze Büro', price: '39', billing: 'pro Nutzer / Monat · ab 3 Nutzer', featured: false,
                 feats: [[true,'Alles aus Pro'],[true,'Team-Verwaltung & Rollen'],[true,'Eigenes Branding im PDF'],[true,'Prioritäts-Support'],[true,'Onboarding-Call inkl.'],[true,'Zentrales Dashboard']],
-                cta: 'Team anfragen', ctaClass: 'btn-outline-dark'
+                cta: 'Für mein Team starten', ctaClass: 'btn-outline-dark'
               },
             ].map((plan, i) => (
               <div key={i} className={`plan${plan.featured?' plan--featured':''}`} data-reveal data-delay={i+1}>
@@ -399,7 +398,7 @@ export default function LandingPage() {
       <section className="cta" id="cta">
         <div className="cta__inner">
           <div className="cta__left" data-reveal>
-            <h2>Bereit für bessere<br />Beratung mit<br /><em>Immokalkulator?</em></h2>
+            <h2>Starte kostenlos.<br />Überzeuge deinen nächsten<br /><em>Kunden in 60 Sekunden.</em></h2>
             <ul className="cta__bullets">
               {['Keine Kreditkarte nötig','5 Analysen kostenlos','Sofort loslegen — in 2 Minuten'].map((b,i)=>(
                 <li key={i}>
@@ -417,7 +416,7 @@ export default function LandingPage() {
               <input type="text" placeholder="Nachname" className="form-input" />
             </div>
             <input type="email" placeholder="E-Mail-Adresse" className="form-input form-input--full" />
-            <button className="btn-primary btn--block btn--lg">Jetzt kostenlos starten →</button>
+            <button className="btn-primary btn--block btn--lg">Meinen kostenlosen Account erstellen →</button>
             <p className="form-legal">Mit der Registrierung stimmst du unseren AGB und Datenschutzbestimmungen zu.</p>
           </div>
         </div>

@@ -563,6 +563,14 @@ body {
   line-height: 1.4;
   max-width: 160px;
 }
+.stat__sublabel {
+  font-size: 11px;
+  color: var(--cream-3);
+  opacity: 0.5;
+  margin-top: 4px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
 
 /* ─── SECTION HEAD ───────────────────────────────── */
 .section-head { margin-bottom: 64px; }
