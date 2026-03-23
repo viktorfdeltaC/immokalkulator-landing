@@ -110,11 +110,63 @@ body {
 [data-reveal][data-delay="4"] { transition-delay: .32s; }
 [data-reveal].visible { opacity: 1; transform: translateY(0); }
 
+/* ─── SCROLL PROGRESS ────────────────────────────── */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold-d), var(--gold), var(--gold-l));
+  z-index: 9999;
+  transition: width .1s linear;
+  pointer-events: none;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ─── STICKY BAR ─────────────────────────────────── */
+.sticky-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 500;
+  transform: translateY(100%);
+  transition: transform .4s cubic-bezier(.16,1,.3,1);
+  background: rgba(13,13,10,.94);
+  backdrop-filter: blur(28px) saturate(1.8);
+  -webkit-backdrop-filter: blur(28px) saturate(1.8);
+  border-top: 1px solid rgba(196,154,60,.2);
+  padding: 14px 24px;
+}
+.sticky-bar--visible { transform: translateY(0); }
+.sticky-bar__inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.sticky-bar__left { display: flex; align-items: center; gap: 12px; }
+.sticky-bar__logo {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: var(--gold);
+  color: var(--black);
+  font-weight: 800; font-size: 11px;
+  font-family: var(--font-body);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.sticky-bar__title { font-weight: 700; font-size: 14px; color: var(--cream); letter-spacing: -.01em; line-height: 1.3; }
+.sticky-bar__sub { font-size: 11px; color: var(--gold); }
+.sticky-bar__right { display: flex; align-items: center; gap: 16px; }
+.sticky-bar__proof { font-size: 12px; color: var(--cream-3); white-space: nowrap; }
+
 /* ─── BUTTONS ────────────────────────────────────── */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  position: relative;
+  overflow: hidden;
   background: var(--gold);
   color: var(--black);
   font-family: var(--font-body);
@@ -137,6 +189,20 @@ body {
 .btn-primary.btn--lg  { font-size: 15px; padding: 15px 30px; border-radius: 9px; }
 .btn-primary.btn--sm  { font-size: 13px; padding: 9px 18px; border-radius: 7px; }
 .btn-primary.btn--block { display: flex; width: 100%; justify-content: center; }
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -80%;
+  width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent);
+  transform: skewX(-18deg);
+  animation: btn-shimmer 4s ease-in-out 1.5s infinite;
+  pointer-events: none;
+}
+@keyframes btn-shimmer {
+  0%, 100% { left: -80%; opacity: 1; }
+  35%, 65%  { left: 130%; opacity: 1; }
+}
 
 .btn-outline-light {
   display: inline-flex;
@@ -1077,4 +1143,52 @@ body {
 
   .footer { padding: 20px 20px; }
   .footer__links { flex-wrap: wrap; gap: 14px; }
+  .sticky-bar { padding: 10px 16px; }
+  .sticky-bar__proof { display: none; }
 }
+
+/* ─── FEATURE ROW ENHANCED HOVER ────────────────────── */
+.feat-row {
+  transition: background .22s, box-shadow .22s;
+}
+.feat-row:hover {
+  box-shadow: inset 3px 0 0 rgba(196,154,60,.6);
+  background: rgba(196,154,60,.04);
+}
+
+/* ─── PLAN BADGE PULSE ───────────────────────────────── */
+@keyframes badge-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(196,154,60,.5); }
+  50%       { box-shadow: 0 0 0 7px rgba(196,154,60,0); }
+}
+.plan__badge { animation: badge-pulse 2.4s ease-in-out infinite; }
+
+/* ─── FORM TRUST SIGNALS ─────────────────────────────── */
+.form-trust {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0 12px;
+  border-top: 1px solid rgba(237,232,220,.07);
+  margin-top: 2px;
+}
+.form-trust__avatars { display: flex; }
+.form-trust__av {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(13,13,10,.6);
+  margin-left: -6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 7.5px; font-weight: 700;
+  color: #fff;
+  font-family: var(--font-body);
+  flex-shrink: 0;
+}
+.form-trust__av:first-child { margin-left: 0; }
+.form-trust__av--1 { background: #1e4f72; }
+.form-trust__av--2 { background: #1a3a6b; }
+.form-trust__av--3 { background: #3d2b6b; }
+.form-trust__av--4 { background: #6b3a1e; }
+.form-trust__av--5 { background: #1e5240; }
+.form-trust__text { font-size: 11.5px; color: rgba(237,232,220,.45); line-height: 1.4; }
+.form-trust__text strong { color: rgba(237,232,220,.75); }

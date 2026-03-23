@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './LandingPage.css';
 
 function useReveal() {
@@ -31,6 +31,52 @@ function useCountUp(target, duration = 2000) {
     requestAnimationFrame(step);
   }, [target, duration]);
   return value;
+}
+
+function ScrollProgress() {
+  const [pct, setPct] = useState(0);
+  useEffect(() => {
+    const onScroll = () => {
+      const doc = document.documentElement;
+      const scrollTop = doc.scrollTop || document.body.scrollTop;
+      const scrollHeight = doc.scrollHeight - doc.clientHeight;
+      setPct(scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return <div className="scroll-progress" style={{ width: `${pct}%` }} aria-hidden="true" />;
+}
+
+function StickyBar() {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const onScroll = () => {
+      const heroH = document.querySelector('.hero')?.offsetHeight || 600;
+      const ctaEl = document.querySelector('#cta');
+      const ctaTop = ctaEl ? ctaEl.getBoundingClientRect().top : 9999;
+      setVisible(window.scrollY > heroH - 80 && ctaTop > 80);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return (
+    <div className={`sticky-bar${visible ? ' sticky-bar--visible' : ''}`} aria-hidden={!visible}>
+      <div className="sticky-bar__inner">
+        <div className="sticky-bar__left">
+          <div className="sticky-bar__logo">IK</div>
+          <div>
+            <div className="sticky-bar__title">Immokalkulator</div>
+            <div className="sticky-bar__sub">500+ aktive Berater · ★★★★★</div>
+          </div>
+        </div>
+        <div className="sticky-bar__right">
+          <span className="sticky-bar__proof">Kostenlos · Keine Kreditkarte</span>
+          <a href="#cta" className="btn-primary btn--sm">5 Analysen gratis →</a>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function StatCounter({ num, label, sublabel, prefix = '', suffix = '' }) {
@@ -91,6 +137,8 @@ export default function LandingPage() {
 
   return (
     <>
+      <ScrollProgress />
+      <StickyBar />
       {/* Film grain overlay */}
       <div className="grain" aria-hidden="true" />
 
@@ -416,6 +464,14 @@ export default function LandingPage() {
               <input type="text" placeholder="Nachname" className="form-input" />
             </div>
             <input type="email" placeholder="E-Mail-Adresse" className="form-input form-input--full" />
+            <div className="form-trust">
+              <div className="form-trust__avatars">
+                {['MK','SR','JH','TL','BF'].map((init, i) => (
+                  <span key={i} className={`form-trust__av form-trust__av--${i+1}`}>{init}</span>
+                ))}
+              </div>
+              <span className="form-trust__text"><strong>492 Berater</strong> registrierten sich diese Woche</span>
+            </div>
             <button className="btn-primary btn--block btn--lg">Meinen kostenlosen Account erstellen →</button>
             <p className="form-legal">Mit der Registrierung stimmst du unseren AGB und Datenschutzbestimmungen zu.</p>
           </div>
