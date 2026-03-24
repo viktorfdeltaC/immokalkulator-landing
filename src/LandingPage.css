@@ -614,71 +614,184 @@ body {
 
 /* ─── HOW IT WORKS ───────────────────────────────── */
 .howto {
-  padding: 96px 0;
+  padding: 100px 0;
   background: var(--dark);
   border-top: 1px solid var(--border-d);
   border-bottom: 1px solid var(--border-d);
 }
 .howto__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 40px 1fr 40px 1fr;
   gap: 0;
   margin-top: 64px;
-  position: relative;
-}
-.howto__grid::before {
-  content: '';
-  position: absolute;
-  top: 48px;
-  left: calc(16.66% + 20px);
-  right: calc(16.66% + 20px);
-  height: 1px;
-  background: linear-gradient(90deg, rgba(196,154,60,0) 0%, rgba(196,154,60,.35) 20%, rgba(196,154,60,.35) 80%, rgba(196,154,60,0) 100%);
-  pointer-events: none;
-}
-.howto__step {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
-  padding: 0 32px;
-  position: relative;
 }
-.howto__num {
+
+/* Arrow connector */
+.howto__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(196,154,60,.4);
+  margin-top: -32px;
+}
+
+/* Card */
+.howto__card {
+  position: relative;
+  background: rgba(237,232,220,.03);
+  border: 1px solid rgba(237,232,220,.08);
+  border-radius: 16px;
+  padding: 32px 28px 28px;
+  overflow: hidden;
+  transition: border-color .25s, background .25s;
+}
+.howto__card:hover {
+  border-color: rgba(196,154,60,.22);
+  background: rgba(196,154,60,.04);
+}
+.howto__card--final {
+  border-color: rgba(196,154,60,.18);
+  background: rgba(196,154,60,.05);
+}
+.howto__card--final:hover {
+  border-color: rgba(196,154,60,.35);
+  background: rgba(196,154,60,.08);
+}
+
+/* Big decorative number in background */
+.howto__card-bg-num {
+  position: absolute;
+  top: -16px;
+  right: 16px;
+  font-family: var(--font-display);
+  font-size: 120px;
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(237,232,220,.04);
+  letter-spacing: -.04em;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Top tag */
+.howto__card-top {
+  margin-bottom: 20px;
+}
+.howto__tag {
   font-family: var(--font-mono);
   font-size: 10px;
-  letter-spacing: .2em;
-  color: var(--gold);
-  opacity: .5;
-  margin-bottom: 16px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: rgba(237,232,220,.4);
+  background: rgba(237,232,220,.06);
+  padding: 4px 10px;
+  border-radius: 20px;
 }
-.howto__icon {
-  width: 72px;
-  height: 72px;
+.howto__tag--gold {
+  color: var(--gold);
+  background: rgba(196,154,60,.1);
+}
+
+/* Mini preview blocks */
+.howto__preview {
+  border-radius: 10px;
+  background: rgba(0,0,0,.25);
+  border: 1px solid rgba(237,232,220,.07);
+  padding: 14px 16px;
+  margin-bottom: 24px;
+  min-height: 88px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+}
+
+/* Form preview */
+.hwp__field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(237,232,220,.06);
+}
+.hwp__field:last-child { border-bottom: none; }
+.hwp__field--highlight { background: rgba(196,154,60,.04); margin: 0 -4px; padding: 4px 4px; border-radius: 4px; border: none; }
+.hwp__label { color: rgba(237,232,220,.4); font-family: var(--font-mono); letter-spacing: .04em; font-size: 10px; }
+.hwp__val { color: rgba(237,232,220,.75); font-weight: 500; }
+.hwp__val--gold { color: var(--gold); font-weight: 600; }
+
+/* Toggle preview */
+.hwp__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11.5px;
+  color: rgba(237,232,220,.6);
+  padding: 3px 0;
+}
+.hwp__chip {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: rgba(237,232,220,.07);
+  color: rgba(237,232,220,.3);
+  letter-spacing: .06em;
+}
+.hwp__chip--on {
+  background: rgba(76,175,132,.15);
+  color: #4caf84;
+}
+
+/* PDF preview */
+.howto__preview--pdf {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+.hwp__pdf-icon { color: var(--gold); flex-shrink: 0; }
+.hwp__pdf-meta { flex: 1; }
+.hwp__pdf-name { font-size: 11px; color: rgba(237,232,220,.75); font-weight: 500; margin-bottom: 2px; }
+.hwp__pdf-size { font-size: 10px; color: rgba(237,232,220,.35); font-family: var(--font-mono); }
+.hwp__download {
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  background: rgba(196,154,60,.08);
-  border: 1px solid rgba(196,154,60,.2);
+  background: rgba(196,154,60,.15);
+  border: 1px solid rgba(196,154,60,.3);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--gold);
-  margin-bottom: 24px;
-  position: relative;
-  z-index: 1;
+  font-size: 13px;
+  flex-shrink: 0;
 }
-.howto__title {
+
+/* Card body */
+.howto__step-label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: .2em;
+  color: var(--gold);
+  opacity: .55;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.howto__card-title {
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: 21px;
   font-weight: 700;
   color: var(--cream);
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   letter-spacing: -.02em;
+  line-height: 1.2;
 }
-.howto__desc {
-  font-size: 14px;
-  line-height: 1.65;
+.howto__card-desc {
+  font-size: 13.5px;
+  line-height: 1.6;
   color: var(--cream-3);
-  max-width: 220px;
 }
 
 /* ─── FAQ ─────────────────────────────────────────── */
@@ -1284,16 +1397,16 @@ body {
   opacity: 0;
 }
 
-/* ─── HOWTO LINE DRAW ────────────────────────────── */
-[data-reveal-line].visible::before {
-  animation: line-draw .7s cubic-bezier(.16,1,.3,1) .15s both;
+/* ─── HOWTO ARROW ENTRANCE ───────────────────────── */
+.howto__arrow {
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity .5s .6s cubic-bezier(.16,1,.3,1), transform .5s .6s cubic-bezier(.16,1,.3,1);
 }
-@keyframes line-draw {
-  from { transform: scaleX(0); transform-origin: left center; }
-  to   { transform: scaleX(1); transform-origin: left center; }
-}
-.howto__grid::before {
-  transform-origin: left center;
+.howto__card.visible ~ .howto__arrow,
+.howto__grid:has(.howto__card.visible) .howto__arrow {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 /* ─── FAQ SLIDE-IN ───────────────────────────────── */
@@ -1366,11 +1479,8 @@ body {
   .hero__h1 { font-size: clamp(48px, 8vw, 72px); }
   .logos { padding: 18px 32px; gap: 32px; }
   .howto { padding: 72px 32px; }
-  .howto__grid { grid-template-columns: 1fr; gap: 40px; }
-  .howto__grid::before { display: none; }
-  .howto__step { flex-direction: row; align-items: flex-start; text-align: left; gap: 24px; padding: 0; }
-  .howto__icon { flex-shrink: 0; width: 56px; height: 56px; }
-  .howto__desc { max-width: none; }
+  .howto__grid { grid-template-columns: 1fr; gap: 12px; }
+  .howto__arrow { display: none; }
   .faq { padding: 72px 32px; }
   .stats { padding: 72px 32px; }
   .stats__grid { grid-template-columns: repeat(2,1fr); }
@@ -1420,8 +1530,8 @@ body {
   .logos__label { display: none; }
 
   .howto { padding: 52px 20px; }
-  .howto__step { gap: 16px; }
-  .howto__icon { width: 48px; height: 48px; }
+  .howto__card-bg-num { font-size: 80px; }
+  .howto__card-title { font-size: 18px; }
   .faq { padding: 52px 20px; }
   .faq__q { font-size: 14px; }
 
