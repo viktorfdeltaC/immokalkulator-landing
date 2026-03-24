@@ -403,16 +403,27 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── LOGOS TICKER ────────────────────────── */}
-      <div className="logos">
-        <span className="logos__label">Vertraut von</span>
-        <div className="logos__track-wrap">
-          <div className="logos__track">
-            {[...Array(2)].flatMap((_,r) =>
-              ['RE/MAX','Volksbank','Sparkasse','ING','Dr. Klein','Interhyp','Engel & Völkers','Von Poll','Postbank','Commerzbank'].map((l,i)=>(
-                <span key={`${r}-${i}`} className="logos__item">{l}</span>
-              ))
-            )}
+      {/* ── TICKER ──────────────────────────────── */}
+      <div className="logos logos--dual">
+        <span className="logos__label">Täglich genutzt von</span>
+        <div className="logos__tracks">
+          <div className="logos__track-wrap">
+            <div className="logos__track">
+              {[...Array(2)].flatMap((_,r) =>
+                ['Immobilienmakler','Finanzierungsberater','Kapitalanlageberater','Baufinanzierungsexperten','Vermögensberater','Investmentberater','Immobilienverwalter','Kreditvermittler'].map((l,i)=>(
+                  <span key={`a-${r}-${i}`} className="logos__item">{l}</span>
+                ))
+              )}
+            </div>
+          </div>
+          <div className="logos__track-wrap">
+            <div className="logos__track logos__track--features">
+              {[...Array(2)].flatMap((_,r) =>
+                ['Cashflow-Kalkulator','Renditeanalyse','Stresstest & Risiko','KfW-Integration','PDF-Export','Vergleichsmodus','Steuerberechnung','Wertsteigerungsprognose'].map((l,i)=>(
+                  <span key={`b-${r}-${i}`} className="logos__item logos__item--feat">{l}</span>
+                ))
+              )}
+            </div>
           </div>
         </div>
       </div>
