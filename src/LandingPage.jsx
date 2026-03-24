@@ -79,6 +79,123 @@ function StickyBar() {
   );
 }
 
+/* ── ANIMATED HERO DASHBOARD ──────────────────────── */
+function HeroDashboard() {
+  const [started, setStarted] = useState(false);
+  const [rendite, setRendite] = useState(0);
+  const [cashflow, setCashflow] = useState(0);
+  const [ekRendite, setEkRendite] = useState(0);
+  const dashRef = useRef(null);
+
+  useEffect(() => {
+    if (!dashRef.current) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setStarted(true); obs.disconnect(); } },
+      { threshold: 0.2 }
+    );
+    obs.observe(dashRef.current);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!started) return;
+    function countTo(setter, target, delay) {
+      const timer = setTimeout(() => {
+        let t0 = null;
+        const dur = 1600;
+        const step = (ts) => {
+          if (!t0) t0 = ts;
+          const p = Math.min((ts - t0) / dur, 1);
+          const ease = 1 - Math.pow(1 - p, 4);
+          setter(ease * target);
+          if (p < 1) requestAnimationFrame(step);
+          else setter(target);
+        };
+        requestAnimationFrame(step);
+      }, delay);
+      return timer;
+    }
+    const t1 = countTo(setRendite,  4.8,  300);
+    const t2 = countTo(setCashflow, 382,  480);
+    const t3 = countTo(setEkRendite,11.2, 640);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+  }, [started]);
+
+  const fmt1 = (v) => v.toFixed(1).replace('.', ',');
+  const fmt0 = (v) => Math.round(v);
+
+  return (
+    <div className="dash" ref={dashRef}>
+      <div className="dash__bar">
+        <div className="dash__dots"><span/><span/><span/></div>
+        <span className="dash__url">immokalkulator.de · München Maxvorstadt</span>
+      </div>
+      <div className="dash__layout">
+        <aside className="dash__sidebar">
+          <div className="dash__sidebar-logo">IK</div>
+          {['◈','⊞','◎','⬡','↗','□'].map((ic, i) => (
+            <div key={i} className={`dash__sidebar-item${i===1?' active':''}`}>{ic}</div>
+          ))}
+        </aside>
+        <div className="dash__main">
+          <div className="dash__header-row">
+            <div>
+              <div className="dash__prop-title">Maxvorstadt 14B — 3 Zi., 78 m²</div>
+              <div className="dash__prop-sub">Kaufpreis: 620.000 € · EK: 20 %</div>
+            </div>
+            <div className="dash__live"><span className="dash__live-dot"/>Live</div>
+          </div>
+          <div className="dash__kpis">
+            <div className="dash__kpi dash__kpi--hl">
+              <div className="dash__kpi-label">Netto-Rendite</div>
+              <div className="dash__kpi-val">{fmt1(rendite)}<span>%</span></div>
+              <div className="dash__kpi-delta up">↑ +0,3 %</div>
+            </div>
+            <div className="dash__kpi">
+              <div className="dash__kpi-label">Monatl. Cashflow</div>
+              <div className="dash__kpi-val">+{fmt0(cashflow)}<span>€</span></div>
+              <span className="dash__badge green">Positiv</span>
+            </div>
+            <div className="dash__kpi">
+              <div className="dash__kpi-label">EK-Rendite</div>
+              <div className="dash__kpi-val">{fmt1(ekRendite)}<span>%</span></div>
+              <span className="dash__badge green">Stark</span>
+            </div>
+            <div className="dash__kpi">
+              <div className="dash__kpi-label">Stresstest +2%</div>
+              <div className="dash__kpi-val-sm">Tragbar</div>
+              <span className="dash__badge green">✓</span>
+            </div>
+          </div>
+          <div className="dash__bars-wrap">
+            <div className="dash__bars-label">Cashflow 12 Monate</div>
+            <div className="dash__bars">
+              {[62,68,72,65,80,75,88,82,91,86,95,100].map((h,i)=>(
+                <div key={i} className="dash__bar-col">
+                  <div className="dash__bar-fill" style={{
+                    height: `${h}%`,
+                    animation: started
+                      ? `bar-grow 0.7s cubic-bezier(0.16,1,0.3,1) ${0.35 + i * 0.045}s both`
+                      : 'none',
+                    transform: started ? undefined : 'scaleY(0)',
+                    transformOrigin: 'bottom',
+                  }}/>
+                  <span className="dash__bar-lbl">{['J','F','M','A','M','J','J','A','S','O','N','D'][i]}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="dash__tags">
+            <span className="dash__tag dash__tag--gold">⬡ KfW 300</span>
+            <span className="dash__tag">PDF bereit</span>
+            <span className="dash__tag">2 Objekte</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function StatCounter({ num, label, sublabel, prefix = '', suffix = '' }) {
   const [started, setStarted] = useState(false);
   const elRef = (el) => {
@@ -134,6 +251,47 @@ const featureList = [
 
 export default function LandingPage() {
   useReveal();
+
+  // ── Mouse parallax on hero visual ───────────────
+  useEffect(() => {
+    const hero = document.querySelector('.hero');
+    const visual = document.querySelector('.hero__visual');
+    if (!visual) return;
+    let tX = 0, tY = 0, cX = 0, cY = 0, raf;
+    const onMove = (e) => {
+      const rect = hero?.getBoundingClientRect() || { left: 0, top: 0, width: window.innerWidth, height: window.innerHeight };
+      tX = ((e.clientX - rect.left) / rect.width  - 0.5) * -10;
+      tY = ((e.clientY - rect.top)  / rect.height - 0.5) * -7;
+    };
+    const loop = () => {
+      cX += (tX - cX) * 0.055;
+      cY += (tY - cY) * 0.055;
+      if (visual.classList.contains('visible')) {
+        visual.style.transform = `translate(${cX.toFixed(2)}px, ${cY.toFixed(2)}px)`;
+      }
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    window.addEventListener('mousemove', onMove, { passive: true });
+    return () => { window.removeEventListener('mousemove', onMove); cancelAnimationFrame(raf); };
+  }, []);
+
+  // ── Form state ────────────────────────────────────
+  const [formState, setFormState] = useState('idle'); // idle | loading | success
+  const [emailError, setEmailError] = useState(false);
+  const emailRef = useRef(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const email = emailRef.current?.value || '';
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setEmailError(true);
+      setTimeout(() => setEmailError(false), 600);
+      return;
+    }
+    setFormState('loading');
+    setTimeout(() => setFormState('success'), 1800);
+  };
 
   return (
     <>
@@ -205,67 +363,7 @@ export default function LandingPage() {
 
         {/* Dashboard — rechte Spalte */}
         <div className="hero__visual" data-reveal data-delay="2">
-          <div className="dash">
-            <div className="dash__bar">
-              <div className="dash__dots"><span/><span/><span/></div>
-              <span className="dash__url">immokalkulator.de · München Maxvorstadt</span>
-            </div>
-            <div className="dash__layout">
-              <aside className="dash__sidebar">
-                <div className="dash__sidebar-logo">IK</div>
-                {['◈','⊞','◎','⬡','↗','□'].map((ic, i) => (
-                  <div key={i} className={`dash__sidebar-item${i===1?' active':''}`}>{ic}</div>
-                ))}
-              </aside>
-              <div className="dash__main">
-                <div className="dash__header-row">
-                  <div>
-                    <div className="dash__prop-title">Maxvorstadt 14B — 3 Zi., 78 m²</div>
-                    <div className="dash__prop-sub">Kaufpreis: 620.000 € · EK: 20 %</div>
-                  </div>
-                  <div className="dash__live"><span className="dash__live-dot"/>Live</div>
-                </div>
-                <div className="dash__kpis">
-                  <div className="dash__kpi dash__kpi--hl">
-                    <div className="dash__kpi-label">Netto-Rendite</div>
-                    <div className="dash__kpi-val">4,8<span>%</span></div>
-                    <div className="dash__kpi-delta up">↑ +0,3 %</div>
-                  </div>
-                  <div className="dash__kpi">
-                    <div className="dash__kpi-label">Monatl. Cashflow</div>
-                    <div className="dash__kpi-val">+382<span>€</span></div>
-                    <span className="dash__badge green">Positiv</span>
-                  </div>
-                  <div className="dash__kpi">
-                    <div className="dash__kpi-label">EK-Rendite</div>
-                    <div className="dash__kpi-val">11,2<span>%</span></div>
-                    <span className="dash__badge green">Stark</span>
-                  </div>
-                  <div className="dash__kpi">
-                    <div className="dash__kpi-label">Stresstest +2%</div>
-                    <div className="dash__kpi-val-sm">Tragbar</div>
-                    <span className="dash__badge green">✓</span>
-                  </div>
-                </div>
-                <div className="dash__bars-wrap">
-                  <div className="dash__bars-label">Cashflow 12 Monate</div>
-                  <div className="dash__bars">
-                    {[62,68,72,65,80,75,88,82,91,86,95,100].map((h,i)=>(
-                      <div key={i} className="dash__bar-col">
-                        <div className="dash__bar-fill" style={{height:`${h}%`}}/>
-                        <span className="dash__bar-lbl">{['J','F','M','A','M','J','J','A','S','O','N','D'][i]}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="dash__tags">
-                  <span className="dash__tag dash__tag--gold">⬡ KfW 300</span>
-                  <span className="dash__tag">PDF bereit</span>
-                  <span className="dash__tag">2 Objekte</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <HeroDashboard />
           {/* floating cards */}
           <div className="hero__float hero__float--tl">
             <span>⚡</span>
@@ -459,20 +557,51 @@ export default function LandingPage() {
           <div className="cta__form" data-reveal data-delay="2">
             <div className="cta__form-title">Kostenlos registrieren</div>
             <div className="cta__form-sub">Starter-Plan · Keine Kreditkarte nötig</div>
-            <div className="form-row">
-              <input type="text" placeholder="Vorname" className="form-input" />
-              <input type="text" placeholder="Nachname" className="form-input" />
-            </div>
-            <input type="email" placeholder="E-Mail-Adresse" className="form-input form-input--full" />
-            <div className="form-trust">
-              <div className="form-trust__avatars">
-                {['MK','SR','JH','TL','BF'].map((init, i) => (
-                  <span key={i} className={`form-trust__av form-trust__av--${i+1}`}>{init}</span>
-                ))}
+            <form onSubmit={handleSubmit} noValidate>
+              <div className="form-row">
+                <input type="text" placeholder="Vorname" className="form-input" disabled={formState !== 'idle'} />
+                <input type="text" placeholder="Nachname" className="form-input" disabled={formState !== 'idle'} />
               </div>
-              <span className="form-trust__text"><strong>492 Berater</strong> registrierten sich diese Woche</span>
-            </div>
-            <button className="btn-primary btn--block btn--lg">Meinen kostenlosen Account erstellen →</button>
+              <input
+                ref={emailRef}
+                type="email"
+                placeholder="E-Mail-Adresse"
+                className={`form-input form-input--full${emailError ? ' form-input--error' : ''}`}
+                disabled={formState !== 'idle'}
+              />
+              <div className="form-trust">
+                <div className="form-trust__avatars">
+                  {['MK','SR','JH','TL','BF'].map((init, i) => (
+                    <span key={i} className={`form-trust__av form-trust__av--${i+1}`}>{init}</span>
+                  ))}
+                </div>
+                <span className="form-trust__text"><strong>492 Berater</strong> registrierten sich diese Woche</span>
+              </div>
+              <button
+                type="submit"
+                className={`btn-primary btn--block btn--lg form-btn--${formState}`}
+                disabled={formState !== 'idle'}
+              >
+                {formState === 'idle' && 'Meinen kostenlosen Account erstellen →'}
+                {formState === 'loading' && (
+                  <span className="form-btn__loading">
+                    <svg className="form-spinner" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeDasharray="40" strokeDashoffset="15" strokeLinecap="round"/>
+                    </svg>
+                    Wird verarbeitet…
+                  </span>
+                )}
+                {formState === 'success' && (
+                  <span className="form-btn__success">
+                    <svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+                      <circle cx="12" cy="12" r="10" fill="rgba(0,0,0,.15)"/>
+                      <path d="M7 12l3.5 3.5 6.5-7" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="form-check"/>
+                    </svg>
+                    Erfolgreich registriert!
+                  </span>
+                )}
+              </button>
+            </form>
             <p className="form-legal">Mit der Registrierung stimmst du unseren AGB und Datenschutzbestimmungen zu.</p>
           </div>
         </div>
