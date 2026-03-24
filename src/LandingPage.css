@@ -51,7 +51,7 @@
   --shadow-lg: 0 8px 32px rgba(0,0,0,.2), 0 40px 100px rgba(0,0,0,.3);
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   background: var(--black);
@@ -1229,6 +1229,38 @@ body {
   .footer__links { flex-wrap: wrap; gap: 14px; }
   .sticky-bar { padding: 10px 16px; }
   .sticky-bar__proof { display: none; }
+
+  /* Remove double padding: sections have their own 20px side padding, container adds 32px on top.
+     At 375px this gives only 136px per stats column — too narrow for big numbers. Zero out container. */
+  .container { padding: 0; }
+
+  /* Stats — numbers now have 167px per column, enough for all values */
+  .stat__num { font-size: clamp(40px, 11vw, 58px); overflow-wrap: break-word; }
+  .stat__label { font-size: 12px; }
+  .stat__sublabel { white-space: normal; font-size: 11px; }
+
+  /* Nav CTA — compact on small screens */
+  .nav__actions .btn-primary.btn--sm { font-size: 11px; padding: 6px 10px; letter-spacing: 0; white-space: nowrap; }
+
+  /* Hero badge — keep on one line, clip gracefully */
+  .hero__badge { max-width: calc(100vw - 40px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  /* Dashboard URL bar */
+  .dash__url { max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .dash__prop-title { font-size: 11px; }
+  .dash__kpi-val { font-size: 22px; }
+
+  /* Audience eyebrow — long compound words */
+  .aud-card__eyebrow { white-space: normal; max-width: 100%; line-height: 1.4; }
+
+  /* Testimonials */
+  .testi blockquote { word-break: break-word; hyphens: auto; }
+
+  /* Pricing headline */
+  .pricing .section-head h2 { font-size: clamp(28px, 8vw, 44px); }
+
+  /* CTA — ensure form doesn't create horizontal scroll */
+  .cta__form, .cta__inner { max-width: 100%; }
 }
 
 /* ─── FEATURE ROW ENHANCED HOVER ────────────────────── */
