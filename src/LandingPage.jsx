@@ -79,6 +79,53 @@ function StickyBar() {
   );
 }
 
+/* ── FAQ ACCORDION ────────────────────────────────── */
+const faqItems = [
+  {
+    q: 'Was passiert nach den 5 kostenlosen Analysen?',
+    a: 'Du wechselst einfach in den Pro-Plan — oder nutzt den Starter weiter. 5 Analysen pro Monat bleiben dauerhaft gratis. Keine automatische Abbuchung, kein Verstecken hinter Paywalls.'
+  },
+  {
+    q: 'Kann ich meinen eigenen Briefkopf im PDF verwenden?',
+    a: 'Im Team-Plan ist eigenes Branding inklusive: Logo, Firmenfarben, Kontaktdaten. Im Pro-Plan erscheint ein Immokalkulator-Logo im PDF.'
+  },
+  {
+    q: 'Sind meine Kundendaten DSGVO-konform gesichert?',
+    a: 'Ja. Alle Daten werden auf deutschen Servern gespeichert, verschlüsselt übertragen (TLS) und nicht an Dritte weitergegeben. Volle DSGVO-Konformität.'
+  },
+  {
+    q: 'Brauche ich eine Einschulung oder technisches Wissen?',
+    a: 'Nein. Die meisten Nutzer machen ihre erste vollständige Analyse innerhalb von 5 Minuten — ohne Anleitung. Einfach Objekt eingeben, fertig.'
+  },
+  {
+    q: 'Funktioniert Immokalkulator auch auf dem Tablet im Kundengespräch?',
+    a: 'Ja, vollständig responsive. Viele Makler nutzen es täglich direkt auf dem iPad beim Kunden — das macht den stärksten Eindruck.'
+  },
+  {
+    q: 'Wie kündige ich?',
+    a: 'Jederzeit, mit einem Klick im Account-Bereich. Keine Kündigungsfrist, keine langen Formulare, keine versteckten Hürden.'
+  },
+];
+
+function FaqAccordion() {
+  const [open, setOpen] = useState(null);
+  return (
+    <div className="faq__list">
+      {faqItems.map((item, i) => (
+        <div key={i} className={`faq__item${open === i ? ' faq__item--open' : ''}`} data-reveal>
+          <button className="faq__q" onClick={() => setOpen(open === i ? null : i)} aria-expanded={open === i}>
+            <span>{item.q}</span>
+            <span className="faq__icon" aria-hidden="true">{open === i ? '×' : '+'}</span>
+          </button>
+          <div className="faq__a" aria-hidden={open !== i}>
+            <div className="faq__a-inner">{item.a}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /* ── ANIMATED HERO DASHBOARD ──────────────────────── */
 function HeroDashboard() {
   const [started, setStarted] = useState(false);
@@ -428,6 +475,45 @@ export default function LandingPage() {
         </div>
       </div>
 
+      {/* ── HOW IT WORKS ────────────────────────── */}
+      <section className="howto">
+        <div className="container">
+          <div className="section-head" data-reveal>
+            <span className="label-tag">So einfach</span>
+            <h2>In 3 Schritten<br /><em>zum Abschluss.</em></h2>
+          </div>
+          <div className="howto__grid">
+            {[
+              {
+                num: '01',
+                svg: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="12" y2="16"/></svg>,
+                title: 'Objekt eingeben',
+                desc: 'Adresse, Kaufpreis und Eigenkapital — fertig. Dauert unter 60 Sekunden.'
+              },
+              {
+                num: '02',
+                svg: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>,
+                title: 'Analyse anpassen',
+                desc: 'Stresstest, KfW-Förderung, Szenarien — ein Klick je Einstellung. Sofort live.'
+              },
+              {
+                num: '03',
+                svg: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/><line x1="9" y1="11" x2="15" y2="11"/></svg>,
+                title: 'PDF exportieren & abschließen',
+                desc: 'Bankfertiger Bericht, sofort überzeugend. Kein Nacharbeiten, kein Warten.'
+              },
+            ].map((step, i) => (
+              <div key={i} className="howto__step" data-reveal data-delay={i + 1}>
+                <div className="howto__num">{step.num}</div>
+                <div className="howto__icon">{step.svg}</div>
+                <div className="howto__title">{step.title}</div>
+                <div className="howto__desc">{step.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── STATS ───────────────────────────────── */}
       <section className="stats">
         <div className="container">
@@ -553,7 +639,7 @@ export default function LandingPage() {
                 cta: 'Pro jetzt aktivieren →', ctaClass: 'btn-primary'
               },
               {
-                name: 'Team', tagline: 'Für das ganze Büro', price: '39', billing: 'pro Nutzer / Monat · ab 3 Nutzer', featured: false,
+                name: 'Team', tagline: 'Für das ganze Büro', price: '79', billing: 'pro Nutzer / Monat · ab 3 Nutzer', featured: false,
                 feats: [[true,'Alles aus Pro'],[true,'Team-Verwaltung & Rollen'],[true,'Eigenes Branding im PDF'],[true,'Prioritäts-Support'],[true,'Onboarding-Call inkl.'],[true,'Zentrales Dashboard']],
                 cta: 'Für mein Team starten', ctaClass: 'btn-outline-dark'
               },
@@ -575,6 +661,21 @@ export default function LandingPage() {
               </div>
             ))}
           </div>
+          <div className="pricing__urgency" data-reveal>
+            <span className="pricing__urgency-dot" aria-hidden="true"/>
+            Heute haben <strong>8 Berater</strong> mit dem Pro-Plan gestartet.
+          </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ─────────────────────────────────── */}
+      <section className="faq">
+        <div className="container">
+          <div className="section-head" data-reveal>
+            <span className="label-tag">Häufige Fragen</span>
+            <h2>Alles was du<br /><em>wissen musst.</em></h2>
+          </div>
+          <FaqAccordion />
         </div>
       </section>
 
@@ -613,7 +714,7 @@ export default function LandingPage() {
                     <span key={i} className={`form-trust__av form-trust__av--${i+1}`}>{init}</span>
                   ))}
                 </div>
-                <span className="form-trust__text"><strong>492 Berater</strong> registrierten sich diese Woche</span>
+                <span className="form-trust__text"><strong>23 Berater</strong> haben sich diese Woche angemeldet</span>
               </div>
               <button
                 type="submit"
