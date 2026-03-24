@@ -527,15 +527,17 @@ export default function LandingPage() {
             {/* STEP 1 */}
             <div className="howto__card" data-reveal data-delay="1">
               <div className="howto__card-bg-num">01</div>
-              <div className="howto__card-top">
-                <span className="howto__tag">60 Sekunden</span>
+              <div className="howto__card-inner">
+                <div className="howto__card-top">
+                  <span className="howto__tag">60 Sekunden</span>
+                </div>
               </div>
               <div className="howto__preview howto__preview--form">
                 <div className="hwp__field"><span className="hwp__label">Adresse</span><span className="hwp__val">Maxvorstadt 14B</span></div>
                 <div className="hwp__field"><span className="hwp__label">Kaufpreis</span><span className="hwp__val">620.000 €</span></div>
-                <div className="hwp__field hwp__field--highlight"><span className="hwp__label">Eigenkapital</span><span className="hwp__val hwp__val--gold">20 %</span></div>
+                <div className="hwp__field"><span className="hwp__label">Eigenkapital</span><span className="hwp__val hwp__val--gold">20 %</span></div>
               </div>
-              <div className="howto__card-body">
+              <div className="howto__card-inner">
                 <div className="howto__step-label">Schritt 01</div>
                 <h3 className="howto__card-title">Objekt eingeben</h3>
                 <p className="howto__card-desc">Adresse, Kaufpreis und Eigenkapital — fertig. Dauert unter 60 Sekunden.</p>
@@ -543,21 +545,23 @@ export default function LandingPage() {
             </div>
 
             <div className="howto__arrow" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </div>
 
             {/* STEP 2 */}
             <div className="howto__card" data-reveal data-delay="2">
               <div className="howto__card-bg-num">02</div>
-              <div className="howto__card-top">
-                <span className="howto__tag">Live-Vorschau</span>
+              <div className="howto__card-inner">
+                <div className="howto__card-top">
+                  <span className="howto__tag">Live-Vorschau</span>
+                </div>
               </div>
               <div className="howto__preview howto__preview--toggles">
-                <div className="hwp__toggle"><span>Stresstest +2%</span><span className="hwp__chip hwp__chip--on">An</span></div>
-                <div className="hwp__toggle"><span>KfW 300</span><span className="hwp__chip hwp__chip--on">An</span></div>
-                <div className="hwp__toggle"><span>Vergleichsmodus</span><span className="hwp__chip">Aus</span></div>
+                <div className="hwp__toggle"><span>Stresstest +2%</span><span className="hwp__chip hwp__chip--on">AN</span></div>
+                <div className="hwp__toggle"><span>KfW 300</span><span className="hwp__chip hwp__chip--on">AN</span></div>
+                <div className="hwp__toggle"><span>Vergleichsmodus</span><span className="hwp__chip">AUS</span></div>
               </div>
-              <div className="howto__card-body">
+              <div className="howto__card-inner">
                 <div className="howto__step-label">Schritt 02</div>
                 <h3 className="howto__card-title">Analyse anpassen</h3>
                 <p className="howto__card-desc">Stresstest, KfW-Förderung, Szenarien — ein Klick je Einstellung. Sofort live.</p>
@@ -565,18 +569,20 @@ export default function LandingPage() {
             </div>
 
             <div className="howto__arrow" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </div>
 
             {/* STEP 3 */}
-            <div className="howto__card howto__card--final" data-reveal data-delay="3">
+            <div className="howto__card" data-reveal data-delay="3">
               <div className="howto__card-bg-num">03</div>
-              <div className="howto__card-top">
-                <span className="howto__tag howto__tag--gold">Bankfertig</span>
+              <div className="howto__card-inner">
+                <div className="howto__card-top">
+                  <span className="howto__tag howto__tag--gold">Bankfertig</span>
+                </div>
               </div>
               <div className="howto__preview howto__preview--pdf">
                 <div className="hwp__pdf-icon">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" strokeWidth="1.6"/><polyline points="14 2 14 8 20 8" stroke="currentColor" strokeWidth="1.6"/><line x1="9" y1="13" x2="15" y2="13" stroke="currentColor" strokeWidth="1.4"/><line x1="9" y1="17" x2="13" y2="17" stroke="currentColor" strokeWidth="1.4"/></svg>
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" strokeWidth="1.6"/><polyline points="14 2 14 8 20 8" stroke="currentColor" strokeWidth="1.6"/><line x1="9" y1="13" x2="15" y2="13" stroke="currentColor" strokeWidth="1.4"/><line x1="9" y1="17" x2="13" y2="17" stroke="currentColor" strokeWidth="1.4"/></svg>
                 </div>
                 <div className="hwp__pdf-meta">
                   <div className="hwp__pdf-name">Analyse_Maxvorstadt.pdf</div>
@@ -584,7 +590,7 @@ export default function LandingPage() {
                 </div>
                 <div className="hwp__download">↓</div>
               </div>
-              <div className="howto__card-body">
+              <div className="howto__card-inner">
                 <div className="howto__step-label">Schritt 03</div>
                 <h3 className="howto__card-title">PDF exportieren &amp; abschließen</h3>
                 <p className="howto__card-desc">Bankfertiger Bericht, sofort überzeugend. Kein Nacharbeiten, kein Warten.</p>
