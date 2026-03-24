@@ -1097,6 +1097,8 @@ body {
   .form-btn__loading, .form-btn__success { animation: none; }
   .form-spinner { animation: none; }
   .dash__bar-fill { animation: none !important; transform: none !important; }
+  .testi__hl { animation: none !important; }
+  .aud-card .checklist li { transition: none; }
 }
 
 /* ─── FOOTER ─────────────────────────────────────── */
@@ -1244,6 +1246,45 @@ body {
   50%       { box-shadow: 0 0 0 7px rgba(196,154,60,0); }
 }
 .plan__badge { animation: badge-pulse 2.4s ease-in-out infinite; }
+
+/* ─── BUTTON CLICK PRESS ─────────────────────────────── */
+.btn-primary:active {
+  transform: scale(0.96) translateY(0) !important;
+  transition: transform 0.08s cubic-bezier(0.36,0.07,0.19,0.97), background .18s, box-shadow .18s;
+}
+
+/* ─── CHECKLIST STAGGER ──────────────────────────────── */
+.aud-card .checklist li {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.38s cubic-bezier(0.16,1,0.3,1), transform 0.38s cubic-bezier(0.16,1,0.3,1);
+}
+.aud-card.visible .checklist li {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ─── NAV ACTIVE SECTION ─────────────────────────────── */
+.nav__links a.nav__link--active {
+  color: var(--gold) !important;
+  background: rgba(196,154,60,.08);
+}
+
+/* ─── TESTIMONIAL NUMBER HIGHLIGHT ──────────────────── */
+.testi__hl {
+  font-weight: 700;
+  color: var(--ink);
+  transition: color 0.4s ease;
+}
+.testi.visible .testi__hl {
+  color: var(--gold-d);
+  animation: testi-hl-flash 0.55s cubic-bezier(0.16,1,0.3,1) 0.45s both;
+}
+@keyframes testi-hl-flash {
+  0%   { color: var(--ink); }
+  40%  { color: var(--gold-l); }
+  100% { color: var(--gold-d); }
+}
 
 /* ─── FORM TRUST SIGNALS ─────────────────────────────── */
 .form-trust {

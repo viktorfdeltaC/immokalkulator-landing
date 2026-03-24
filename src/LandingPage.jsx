@@ -216,6 +216,21 @@ function StatCounter({ num, label, sublabel, prefix = '', suffix = '' }) {
   );
 }
 
+/* Wrap key numbers/phrases in testimonials with gold highlight span */
+function hilite(text) {
+  const re = /(\b\d+\s*%|\b\d+\s*Kollegen\b|zwei Wochen|eine Stunde)/g;
+  const parts = [];
+  let last = 0, m;
+  re.lastIndex = 0;
+  while ((m = re.exec(text)) !== null) {
+    if (m.index > last) parts.push(text.slice(last, m.index));
+    parts.push(<span key={m.index} className="testi__hl">{m[0]}</span>);
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) parts.push(text.slice(last));
+  return parts;
+}
+
 const featureList = [
   {
     num: '01', tag: 'Kernfunktion', title: 'Cashflow-Kalkulator',
@@ -276,6 +291,18 @@ export default function LandingPage() {
     return () => { window.removeEventListener('mousemove', onMove); cancelAnimationFrame(raf); };
   }, []);
 
+  // ── Active nav section ────────────────────────────
+  const [activeSection, setActiveSection] = useState('');
+  useEffect(() => {
+    const ids = ['features', 'zielgruppen', 'pricing', 'cta'];
+    const obs = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) setActiveSection(e.target.id); }),
+      { threshold: 0.25, rootMargin: '-15% 0px -60% 0px' }
+    );
+    ids.forEach((id) => { const el = document.getElementById(id); if (el) obs.observe(el); });
+    return () => obs.disconnect();
+  }, []);
+
   // ── Form state ────────────────────────────────────
   const [formState, setFormState] = useState('idle'); // idle | loading | success
   const [emailError, setEmailError] = useState(false);
@@ -312,9 +339,9 @@ export default function LandingPage() {
             Immokalkulator
           </a>
           <ul className="nav__links">
-            <li><a href="#features">Funktionen</a></li>
-            <li><a href="#zielgruppen">Für wen</a></li>
-            <li><a href="#pricing">Preise</a></li>
+            <li><a href="#features" className={activeSection === 'features' ? 'nav__link--active' : ''}>Funktionen</a></li>
+            <li><a href="#zielgruppen" className={activeSection === 'zielgruppen' ? 'nav__link--active' : ''}>Für wen</a></li>
+            <li><a href="#pricing" className={activeSection === 'pricing' ? 'nav__link--active' : ''}>Preise</a></li>
           </ul>
           <div className="nav__actions">
             <a href="#" className="btn-ghost">Anmelden</a>
@@ -443,7 +470,7 @@ export default function LandingPage() {
               <p>Zeige live, was ein Objekt wirklich wert ist — mit Zahlen die überzeugen, nicht mit Bauchgefühl.</p>
               <ul className="checklist">
                 {['Investitionsanalyse in unter 60 Sekunden','Professionelle PDFs die Vertrauen schaffen','Stresstest-Szenarien die Einwände entkräften','Rendite- und Cashflow-Vergleich','KfW-Förderpotenzial direkt ausweisen'].map((item,i)=>(
-                  <li key={i}><span className="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg></span>{item}</li>
+                  <li key={i} style={{ transitionDelay: `${0.2 + i * 0.06}s` }}><span className="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg></span>{item}</li>
                 ))}
               </ul>
             </div>
@@ -456,7 +483,7 @@ export default function LandingPage() {
               <p>Von der ersten Anfrage bis zur Entscheidungsvorlage — bankfähige Analysen die Kreditprüfungen überstehen.</p>
               <ul className="checklist">
                 {['Beleihungsauslauf und EK-Quote automatisch','Stresstest bei +1%, +2%, +3% Zinsen','Cashflow-Nachweis als PDF-Export','KfW 300 / Bundesförderung integriert','Mehrere Finanzierungsszenarien im Vergleich'].map((item,i)=>(
-                  <li key={i}><span className="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg></span>{item}</li>
+                  <li key={i} style={{ transitionDelay: `${0.3 + i * 0.06}s` }}><span className="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg></span>{item}</li>
                 ))}
               </ul>
             </div>
@@ -480,7 +507,7 @@ export default function LandingPage() {
               <div key={i} className="testi" data-reveal data-delay={i+1}>
                 <div className="testi__mark">"</div>
                 <div className="testi__stars">★★★★★</div>
-                <blockquote>„{t.quote}"</blockquote>
+                <blockquote>„{hilite(t.quote)}"</blockquote>
                 <div className="testi__author">
                   <div className="testi__avatar">{t.name.split(' ').map(n=>n[0]).join('')}</div>
                   <div>
