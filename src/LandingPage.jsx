@@ -13,6 +13,7 @@ function useReveal() {
       { threshold: 0.05, rootMargin: '0px 0px -32px 0px' }
     );
     document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+    document.querySelectorAll('[data-reveal-line]').forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 }
@@ -79,6 +80,31 @@ function StickyBar() {
   );
 }
 
+/* ── TYPEWRITER HOOK ──────────────────────────────── */
+function useTypewriter(text, charDelay = 60, startDelay = 800) {
+  const [displayed, setDisplayed] = useState('');
+  const [done, setDone] = useState(false);
+  const prefersReduced = typeof window !== 'undefined'
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  useEffect(() => {
+    if (prefersReduced) { setDisplayed(text); setDone(true); return; }
+    let i = 0;
+    const start = setTimeout(() => {
+      const tick = () => {
+        i++;
+        setDisplayed(text.slice(0, i));
+        if (i < text.length) setTimeout(tick, charDelay);
+        else setDone(true);
+      };
+      tick();
+    }, startDelay);
+    return () => clearTimeout(start);
+  }, [text, charDelay, startDelay, prefersReduced]);
+
+  return { displayed, done };
+}
+
 /* ── FAQ ACCORDION ────────────────────────────────── */
 const faqItems = [
   {
@@ -110,9 +136,9 @@ const faqItems = [
 function FaqAccordion() {
   const [open, setOpen] = useState(null);
   return (
-    <div className="faq__list">
+    <div className="faq__list" data-reveal>
       {faqItems.map((item, i) => (
-        <div key={i} className={`faq__item${open === i ? ' faq__item--open' : ''}`} data-reveal>
+        <div key={i} className={`faq__item${open === i ? ' faq__item--open' : ''}`} style={{ transitionDelay: `${i * 0.06}s` }}>
           <button className="faq__q" onClick={() => setOpen(open === i ? null : i)} aria-expanded={open === i}>
             <span>{item.q}</span>
             <span className="faq__icon" aria-hidden="true">{open === i ? '×' : '+'}</span>
@@ -175,7 +201,10 @@ function HeroDashboard() {
     <div className="dash" ref={dashRef}>
       <div className="dash__bar">
         <div className="dash__dots"><span/><span/><span/></div>
-        <span className="dash__url">immokalkulator.de · München Maxvorstadt</span>
+        <span className="dash__url">
+          immokalkulator.de · München Maxvorstadt
+          {started && <span className="dash__cursor" aria-hidden="true">|</span>}
+        </span>
       </div>
       <div className="dash__layout">
         <aside className="dash__sidebar">
@@ -311,6 +340,21 @@ const featureList = [
   },
 ];
 
+/* ── HERO HEADLINE mit Typewriter ─────────────────── */
+function HeroHeadline() {
+  const { displayed, done } = useTypewriter('analysiert.', 58, 900);
+  return (
+    <h1 className="hero__h1" data-reveal data-delay="1">
+      Mehr Abschlüsse.<br />
+      In 60 Sekunden<br />
+      <em>
+        {displayed}
+        {!done && <span className="hero__cursor" aria-hidden="true">|</span>}
+      </em>
+    </h1>
+  );
+}
+
 export default function LandingPage() {
   useReveal();
 
@@ -405,11 +449,7 @@ export default function LandingPage() {
             Makler &amp; Finanzierungsberater
           </div>
 
-          <h1 className="hero__h1" data-reveal data-delay="1">
-            Mehr Abschlüsse.<br />
-            In 60 Sekunden<br />
-            <em>analysiert.</em>
-          </h1>
+          <HeroHeadline />
 
           <p className="hero__sub" data-reveal data-delay="2">
             Zeige deinen Kunden live, warum sich ein Objekt rechnet — mit Zahlen statt Bauchgefühl. Fertige PDF-Berichte inklusive.
@@ -482,7 +522,7 @@ export default function LandingPage() {
             <span className="label-tag">So einfach</span>
             <h2>In 3 Schritten<br /><em>zum Abschluss.</em></h2>
           </div>
-          <div className="howto__grid">
+          <div className="howto__grid" data-reveal-line>
             {[
               {
                 num: '01',
