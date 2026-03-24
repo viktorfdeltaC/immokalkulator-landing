@@ -67,7 +67,7 @@ function StickyBar() {
           <div className="sticky-bar__logo">IK</div>
           <div>
             <div className="sticky-bar__title">Immokalkulator</div>
-            <div className="sticky-bar__sub">500+ aktive Berater · ★★★★★</div>
+            <div className="sticky-bar__sub">140+ aktive Berater · ★★★★★</div>
           </div>
         </div>
         <div className="sticky-bar__right">
@@ -383,7 +383,7 @@ export default function LandingPage() {
             </div>
             <div>
               <div className="hero__stars">★★★★★</div>
-              <div className="hero__social-text"><strong>500+</strong> aktive Berater</div>
+              <div className="hero__social-text"><strong>140+</strong> aktive Berater</div>
             </div>
           </div>
         </div>
@@ -424,7 +424,7 @@ export default function LandingPage() {
             <StatCounter num={3200} suffix="+" label="Analysen — jeden Monat" sublabel="Berater nutzen es täglich" />
             <StatCounter num={4200} prefix="€ " suffix=" Mrd." label="Investitionsvolumen analysiert" sublabel="Vertrauen von Profi-Beratern" />
             <StatCounter num={60} suffix=" %" label="weniger Zeit pro Beratung" sublabel="Mehr Kunden, gleiche Stunden" />
-            <StatCounter num={500} suffix="+" label="Aktive Makler & Finanzierer" sublabel="Deutschlandweit im Einsatz" />
+            <StatCounter num={140} suffix="+" label="Aktive Makler & Finanzierer" sublabel="Deutschlandweit im Einsatz" />
           </div>
         </div>
       </section>
