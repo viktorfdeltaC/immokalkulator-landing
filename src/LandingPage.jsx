@@ -355,7 +355,7 @@ export default function LandingPage() {
         <div className="hero__content">
           <div className="hero__badge" data-reveal>
             <span className="hero__badge-dot" />
-            DACH-Raum · Makler &amp; Finanzierungsberater
+            Makler &amp; Finanzierungsberater
           </div>
 
           <h1 className="hero__h1" data-reveal data-delay="1">
@@ -424,7 +424,7 @@ export default function LandingPage() {
             <StatCounter num={3200} suffix="+" label="Analysen — jeden Monat" sublabel="Berater nutzen es täglich" />
             <StatCounter num={4200} prefix="€ " suffix=" Mrd." label="Investitionsvolumen analysiert" sublabel="Vertrauen von Profi-Beratern" />
             <StatCounter num={60} suffix=" %" label="weniger Zeit pro Beratung" sublabel="Mehr Kunden, gleiche Stunden" />
-            <StatCounter num={500} suffix="+" label="Aktive Makler & Finanzierer" sublabel="Bereits im DACH-Einsatz" />
+            <StatCounter num={500} suffix="+" label="Aktive Makler & Finanzierer" sublabel="Deutschlandweit im Einsatz" />
           </div>
         </div>
       </section>
@@ -496,7 +496,7 @@ export default function LandingPage() {
         <div className="container">
           <div className="section-head" data-reveal>
             <span className="label-tag">Kundenstimmen</span>
-            <h2>Berater im ganzen DACH-Raum<br /><em>schließen damit mehr ab.</em></h2>
+            <h2>Deutsche Berater<br /><em>schließen damit mehr ab.</em></h2>
           </div>
           <div className="testi__grid">
             {[
