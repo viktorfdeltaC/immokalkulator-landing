@@ -1692,7 +1692,6 @@ body {
   .testi__grid { grid-template-columns: 1fr; gap: 14px; }
   .pricing { padding: 80px 32px; }
   .pricing__grid { grid-template-columns: 1fr; }
-  .plan--featured { order: -1; }
   .cta { padding: 80px 32px; }
   .cta__inner { grid-template-columns: 1fr; gap: 48px; }
   .footer { padding: 20px 32px; }
@@ -1803,8 +1802,17 @@ body {
   /* CTA — ensure form doesn't create horizontal scroll */
   .cta__form, .cta__inner { max-width: 100%; }
 
-  /* Pricing urgency — centered on mobile, kein 3-Spalten-Optik */
-  .pricing__urgency { justify-content: center; text-align: center; }
+  /* Pricing urgency — block + inline dot, kein 3-Spalten-Optik */
+  .pricing__urgency {
+    display: block;
+    text-align: center;
+  }
+  .pricing__urgency-dot {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 7px;
+    margin-bottom: 2px;
+  }
 }
 
 /* ─── FEATURE ROW ENHANCED HOVER ────────────────────── */
