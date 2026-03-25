@@ -1394,6 +1394,17 @@ body {
 .plan__feats li.on > span { color: var(--green-l); font-weight: 700; flex-shrink: 0; font-size: 13px; }
 .plan__feats li.off > span { color: rgba(237,232,220,.18); flex-shrink: 0; }
 
+/* Outline-Button im dunklen Plan-Context sichtbar machen */
+.plan .btn-outline-dark {
+  color: var(--cream-2);
+  border-color: rgba(237,232,220,.22);
+}
+.plan .btn-outline-dark:hover {
+  color: var(--cream);
+  border-color: rgba(237,232,220,.45);
+  background: rgba(237,232,220,.06);
+}
+
 /* ─── PRICING URGENCY ────────────────────────────── */
 .pricing__urgency {
   display: flex;
