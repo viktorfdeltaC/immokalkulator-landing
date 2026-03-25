@@ -865,7 +865,7 @@ export default function LandingPage() {
                 className={`btn-primary btn--block btn--lg form-btn--${formState}`}
                 disabled={formState !== 'idle'}
               >
-                {formState === 'idle' && 'Meinen kostenlosen Account erstellen →'}
+                {formState === 'idle' && 'Kostenlosen Account erstellen →'}
                 {formState === 'loading' && (
                   <span className="form-btn__loading">
                     <svg className="form-spinner" viewBox="0 0 24 24" fill="none">

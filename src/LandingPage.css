@@ -1737,6 +1737,8 @@ body {
   .features { padding: 60px 20px; }
   .feat-row { grid-template-columns: 40px 1fr; gap: 16px; padding: 28px 0; }
   .feat-row__icon { display: none; }
+  .feat-row__body { grid-column: 2; }
+  .feat-row__tag { grid-column: 2; margin-top: 2px; }
   .feat-row__body h3 { font-size: 20px; }
 
   .section-head { margin-bottom: 44px; }
@@ -1774,7 +1776,7 @@ body {
   .container { padding: 0; }
 
   /* Stats — numbers now have 167px per column, enough for all values */
-  .stat__num { font-size: clamp(40px, 11vw, 58px); overflow-wrap: break-word; }
+  .stat__num { font-size: clamp(40px, 11vw, 58px); overflow-wrap: break-word; white-space: normal; }
   .stat__label { font-size: 12px; }
   .stat__sublabel { white-space: normal; font-size: 11px; }
 
@@ -1800,6 +1802,9 @@ body {
 
   /* CTA — ensure form doesn't create horizontal scroll */
   .cta__form, .cta__inner { max-width: 100%; }
+
+  /* Pricing urgency — centered on mobile, kein 3-Spalten-Optik */
+  .pricing__urgency { justify-content: center; text-align: center; }
 }
 
 /* ─── FEATURE ROW ENHANCED HOVER ────────────────────── */
