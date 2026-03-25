@@ -736,16 +736,20 @@ export default function LandingPage() {
           </div>
           <div className="testi__grid">
             {[
-              { quote: 'Ich präsentiere das Objekt, öffne Immokalkulator, und meine Kunden sehen in Echtzeit warum sich das rechnet. Abschlussrate um 30% gestiegen.', name: 'Markus K.', role: 'Immobilienmakler, München' },
-              { quote: 'Die Bank hat meinen Kreditantrag zum ersten Mal nicht nachgefragt. Vollständig, professionell, bankfähig. Spart mir jeden Tag eine Stunde.', name: 'Sandra R.', role: 'Finanzierungsberaterin, Hamburg' },
-              { quote: 'Endlich kein Excel mehr. Innerhalb von zwei Wochen hatten alle 8 Kollegen es im Einsatz. Das Vergleichs-Tool gibt uns jeden Tag den entscheidenden Vorteil.', name: 'Jonas H.', role: 'Teamleiter Vertrieb, Berlin' },
+              { quote: 'Ich präsentiere das Objekt, öffne Immokalkulator, und meine Kunden sehen in Echtzeit warum sich das rechnet. Abschlussrate um 30% gestiegen.', name: 'Markus K.', role: 'Immobilienmakler, München', avatar: '/Markus.jpg' },
+              { quote: 'Die Bank hat meinen Kreditantrag zum ersten Mal nicht nachgefragt. Vollständig, professionell, bankfähig. Spart mir jeden Tag eine Stunde.', name: 'Sandra R.', role: 'Finanzierungsberaterin, Hamburg', avatar: '/Sandra.jpg' },
+              { quote: 'Endlich kein Excel mehr. Innerhalb von zwei Wochen hatten alle 8 Kollegen es im Einsatz. Das Vergleichs-Tool gibt uns jeden Tag den entscheidenden Vorteil.', name: 'Jonas H.', role: 'Teamleiter Vertrieb, Berlin', avatar: '/Jonas.jpg' },
             ].map((t, i) => (
               <div key={i} className="testi" data-reveal data-delay={i+1}>
                 <div className="testi__mark">"</div>
                 <div className="testi__stars">★★★★★</div>
                 <blockquote>„{hilite(t.quote)}"</blockquote>
                 <div className="testi__author">
-                  <div className="testi__avatar">{t.name.split(' ').map(n=>n[0]).join('')}</div>
+                  <div className="testi__avatar">
+                    {t.avatar
+                      ? <img src={t.avatar} alt={t.name} className="testi__avatar-img" />
+                      : t.name.split(' ').map(n => n[0]).join('')}
+                  </div>
                   <div>
                     <div className="testi__name">{t.name}</div>
                     <div className="testi__role">{t.role}</div>
