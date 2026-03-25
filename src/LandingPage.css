@@ -1745,10 +1745,11 @@ body {
   .stat { padding: 0 0 40px; }
 
   .features { padding: 60px 20px; }
-  .feat-row { grid-template-columns: 40px 1fr; gap: 16px; padding: 28px 0; }
-  .feat-row__icon { display: none; }
-  .feat-row__body { grid-column: 2; }
-  .feat-row__tag { grid-column: 2; margin-top: 2px; }
+  .feat-row { grid-template-columns: 36px 1fr; gap: 16px; padding: 28px 0; }
+  .feat-row__num { display: none; }
+  .feat-row__icon { display: flex; width: 32px; height: 32px; grid-column: 1; grid-row: 1; }
+  .feat-row__body { grid-column: 2; grid-row: 1; }
+  .feat-row__tag { grid-column: 2; grid-row: 2; margin-top: 2px; }
   .feat-row__body h3 { font-size: 20px; }
 
   .section-head { margin-bottom: 44px; }
