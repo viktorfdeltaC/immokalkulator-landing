@@ -777,12 +777,12 @@ export default function LandingPage() {
                 cta: 'Gratis loslegen', ctaClass: 'btn-outline-dark'
               },
               {
-                name: 'Pro', tagline: 'Für aktive Berater', price: '49', billing: 'pro Monat · zzgl. MwSt. · kündbar', featured: true,
+                name: 'Pro', tagline: 'Für aktive Berater', price: '79', billing: 'pro Monat · zzgl. MwSt. · kündbar', featured: true,
                 feats: [[true,'Unbegrenzte Analysen'],[true,'Cashflow, Rendite & mehr'],[true,'PDF ohne Wasserzeichen'],[true,'Stresstest-Modul'],[true,'KfW-Integration'],[true,'Vergleichsmodus']],
                 cta: 'Pro jetzt aktivieren →', ctaClass: 'btn-primary'
               },
               {
-                name: 'Team', tagline: 'Für das ganze Büro', price: '79', billing: 'pro Nutzer / Monat · ab 3 Nutzer', featured: false,
+                name: 'Team', tagline: 'Für das ganze Büro', price: '59', billing: 'pro Nutzer / Monat · ab 3 Nutzer', featured: false,
                 feats: [[true,'Alles aus Pro'],[true,'Team-Verwaltung & Rollen'],[true,'Eigenes Branding im PDF'],[true,'Prioritäts-Support'],[true,'Onboarding-Call inkl.'],[true,'Zentrales Dashboard']],
                 cta: 'Für mein Team starten', ctaClass: 'btn-outline-dark'
               },
