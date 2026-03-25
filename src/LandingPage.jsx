@@ -272,7 +272,7 @@ function HeroDashboard() {
   );
 }
 
-function StatCounter({ num, label, sublabel, prefix = '', suffix = '' }) {
+function StatCounter({ num, label, sublabel, prefix = '', suffix = '', qualifier = '' }) {
   const [started, setStarted] = useState(false);
   const elRef = (el) => {
     if (!el) return;
@@ -285,6 +285,7 @@ function StatCounter({ num, label, sublabel, prefix = '', suffix = '' }) {
   const display = useCountUp(started ? num : 0, 2000);
   return (
     <div className="stat" ref={elRef}>
+      {qualifier && <div className="stat__qualifier">{qualifier}</div>}
       <div className="stat__num">{prefix}{display.toLocaleString('de-DE')}{suffix}</div>
       <div className="stat__label">{label}</div>
       {sublabel && <div className="stat__sublabel">{sublabel}</div>}
@@ -659,7 +660,7 @@ export default function LandingPage() {
           <div className="stats__grid">
             <StatCounter num={1200} suffix="+" label="Analysen — jeden Monat" sublabel="Berater nutzen es täglich" />
             <StatCounter num={180} prefix="€ " suffix=" Mio." label="Investitionsvolumen analysiert" sublabel="Vertrauen von Profi-Beratern" />
-            <StatCounter num={60} suffix=" %" label="weniger Zeit pro Beratung" sublabel="Mehr Kunden, gleiche Stunden" />
+            <StatCounter num={60} suffix=" %" label="weniger Zeit pro Beratung" sublabel="Mehr Kunden, gleiche Stunden" qualifier="bis zu" />
             <StatCounter num={140} suffix="+" label="Aktive Makler & Finanzierer" sublabel="Deutschlandweit im Einsatz" />
           </div>
         </div>
