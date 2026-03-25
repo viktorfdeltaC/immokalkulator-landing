@@ -605,8 +605,8 @@ export default function LandingPage() {
       <section className="stats">
         <div className="container">
           <div className="stats__grid">
-            <StatCounter num={3200} suffix="+" label="Analysen — jeden Monat" sublabel="Berater nutzen es täglich" />
-            <StatCounter num={4200} prefix="€ " suffix=" Mrd." label="Investitionsvolumen analysiert" sublabel="Vertrauen von Profi-Beratern" />
+            <StatCounter num={1200} suffix="+" label="Analysen — jeden Monat" sublabel="Berater nutzen es täglich" />
+            <StatCounter num={180} prefix="€ " suffix=" Mio." label="Investitionsvolumen analysiert" sublabel="Vertrauen von Profi-Beratern" />
             <StatCounter num={60} suffix=" %" label="weniger Zeit pro Beratung" sublabel="Mehr Kunden, gleiche Stunden" />
             <StatCounter num={140} suffix="+" label="Aktive Makler & Finanzierer" sublabel="Deutschlandweit im Einsatz" />
           </div>
