@@ -651,7 +651,11 @@ body {
 }
 .howto__card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+  box-shadow: 0 24px 64px rgba(0,0,0,.4);
+}
+.howto__card--finale {
+  background: rgba(196,154,60,.025);
+  border-color: rgba(196,154,60,.14);
 }
 
 /* Stagger vertical rhythm — creates diagonal flow */
@@ -674,139 +678,214 @@ body {
   height: 4px;
 }
 
-.howto__card-inner { padding: 28px 26px 26px; }
-
-/* Decorative number */
-.howto__card-bg-num {
-  position: absolute;
-  bottom: 12px;
-  right: 18px;
-  font-family: var(--font-display);
-  font-size: 108px;
-  font-weight: 700;
-  line-height: 1;
-  color: rgba(237,232,220,.045);
-  letter-spacing: -.06em;
-  pointer-events: none;
-  user-select: none;
+/* ── Card head: editorial number + tag ────────────── */
+.howto__card-head {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 22px 26px 14px;
+  /* No border — card is one unified surface */
 }
-
-/* Top tag */
-.howto__card-top { margin-bottom: 18px; }
-.howto__tag {
+.howto__card-num {
+  font-family: var(--font-display);
+  font-size: 68px;
+  font-weight: 700;
+  line-height: .88;
+  letter-spacing: -.05em;
+  color: rgba(237,232,220,.18);
+  user-select: none;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+.howto__card-num--gold {
+  color: rgba(196,154,60,.45);
+}
+.howto__card-tag {
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 9px;
   letter-spacing: .18em;
   text-transform: uppercase;
-  color: rgba(237,232,220,.35);
-  border: 1px solid rgba(237,232,220,.1);
-  padding: 3px 10px;
-  border-radius: 20px;
+  color: rgba(237,232,220,.3);
+  padding-bottom: 6px;
 }
-.howto__tag--gold {
-  color: var(--gold);
-  border-color: rgba(196,154,60,.3);
-  background: rgba(196,154,60,.06);
+.howto__card-tag--gold {
+  color: rgba(196,154,60,.75);
 }
 
-/* ── Mini preview ────────────────────────────────── */
+/* ── Mini preview — no dark box, no zone separator ── */
 .howto__preview {
-  background: rgba(0,0,0,.3);
-  border-top: 1px solid rgba(237,232,220,.06);
-  border-bottom: 1px solid rgba(237,232,220,.06);
-  padding: 16px 18px;
-  margin: 0 0 22px;
+  padding: 4px 26px 20px 24px;
+  border-left: 2px solid rgba(196,154,60,.16);
+  margin-left: 26px;
   display: flex;
   flex-direction: column;
   gap: 0;
+  /* No border-bottom — one unified card surface */
 }
 
-/* Form rows */
+/* Universal field row */
 .hwp__field {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: baseline;
   padding: 8px 0;
-  border-bottom: 1px solid rgba(237,232,220,.05);
+  border-bottom: 1px solid rgba(237,232,220,.045);
 }
+.hwp__field--last,
 .hwp__field:last-child { border-bottom: none; }
 .hwp__label {
-  color: rgba(237,232,220,.35);
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-}
-.hwp__val { color: rgba(237,232,220,.8); font-size: 12.5px; font-weight: 500; }
-.hwp__val--gold { color: var(--gold); font-weight: 700; letter-spacing: -.01em; }
-
-/* Toggle rows */
-.hwp__toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 9px 0;
-  border-bottom: 1px solid rgba(237,232,220,.05);
-  font-size: 12px;
-  color: rgba(237,232,220,.65);
-}
-.hwp__toggle:last-child { border-bottom: none; }
-.hwp__chip {
+  color: rgba(237,232,220,.32);
   font-family: var(--font-mono);
   font-size: 9px;
-  padding: 3px 10px;
-  border-radius: 100px;
-  border: 1px solid rgba(237,232,220,.12);
-  color: rgba(237,232,220,.3);
   letter-spacing: .08em;
+  text-transform: uppercase;
+  flex-shrink: 0;
 }
-.hwp__chip--on {
-  border-color: rgba(76,175,132,.4);
-  color: #4caf84;
-  background: rgba(76,175,132,.08);
+/* Dot leader — only renders when .hwp__leader span is present */
+.hwp__leader {
+  flex: 1;
+  border-bottom: 1px dotted rgba(237,232,220,.14);
+  margin: 0 9px;
+  height: 0;
+  align-self: center;
+  min-width: 12px;
+}
+.hwp__val {
+  color: rgba(237,232,220,.72);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -.01em;
+  flex-shrink: 0;
+}
+.hwp__val--gold { color: var(--gold); font-weight: 600; }
+
+/* CSS toggle switches (authentic, not chip labels) */
+.hwp__switch {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 18px;
+  border-radius: 9px;
+  background: rgba(237,232,220,.08);
+  border: 1px solid rgba(237,232,220,.12);
+  flex-shrink: 0;
+  transition: background .2s, border-color .2s;
+}
+.hwp__switch::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(237,232,220,.25);
+  top: 2px;
+  left: 2px;
+  transition: left .2s cubic-bezier(.16,1,.3,1), background .2s;
+}
+.hwp__switch--on {
+  background: rgba(76,175,132,.15);
+  border-color: rgba(76,175,132,.35);
+}
+.hwp__switch--on::after {
+  left: 18px;
+  background: #4caf84;
 }
 
-/* PDF row */
+/* PDF / document preview */
 .howto__preview--pdf {
-  flex-direction: row;
-  align-items: center;
   gap: 14px;
-  padding: 20px 18px;
+  position: relative;
 }
-.hwp__pdf-icon { color: var(--gold); flex-shrink: 0; opacity: .9; }
-.hwp__pdf-meta { flex: 1; min-width: 0; }
+
+/* Bankfertig stamp — Card 3 signature element */
+.hwp__stamp {
+  position: absolute;
+  top: -4px;
+  right: -8px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(196,154,60,.4);
+  color: rgba(196,154,60,.75);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-14deg);
+  background: rgba(196,154,60,.04);
+  pointer-events: none;
+  user-select: none;
+}
+.hwp__doc-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0 10px;
+  border-bottom: 1px solid rgba(237,232,220,.05);
+}
+.hwp__doc-icon {
+  color: rgba(196,154,60,.6);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+.hwp__doc-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.hwp__line {
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(237,232,220,.12);
+  width: 40%;
+}
+.hwp__line--wide { width: 80%; background: rgba(237,232,220,.18); }
+.hwp__line--mid  { width: 55%; }
+
+.hwp__doc-info { padding: 2px 0 0; }
 .hwp__pdf-name {
-  font-size: 12px;
-  color: rgba(237,232,220,.8);
+  font-size: 11.5px;
+  color: rgba(237,232,220,.7);
   font-weight: 500;
-  margin-bottom: 3px;
+  margin-bottom: 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.hwp__pdf-size { font-size: 10px; color: rgba(237,232,220,.3); font-family: var(--font-mono); }
-.hwp__download {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: rgba(196,154,60,.12);
-  border: 1px solid rgba(196,154,60,.35);
+.hwp__pdf-badge {
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: var(--gold);
-  font-size: 13px;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: rgba(76,175,132,.8);
+  letter-spacing: .06em;
+}
+.hwp__badge-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #4caf84;
   flex-shrink: 0;
 }
 
 /* ── Card body text ──────────────────────────────── */
+.howto__card-body {
+  padding: 20px 26px 26px;
+}
 .howto__step-label {
   font-family: var(--font-mono);
   font-size: 9px;
   letter-spacing: .22em;
-  color: rgba(196,154,60,.5);
-  margin-bottom: 6px;
+  color: rgba(196,154,60,.45);
+  margin-bottom: 7px;
   text-transform: uppercase;
+  display: block;
 }
 .howto__card-title {
   font-family: var(--font-display);
@@ -821,6 +900,67 @@ body {
   font-size: 13px;
   line-height: 1.65;
   color: var(--cream-3);
+}
+
+/* ── Howto card animations ──────────────────────────── */
+
+/* Gold scan shimmer on hover — like an analyser sweeping the card */
+.howto__card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(196,154,60,.055) 0%, rgba(196,154,60,.02) 65%, transparent 100%);
+  pointer-events: none;
+  transform: translateY(-105%);
+  z-index: 2;
+}
+.howto__card:hover::after {
+  animation: card-scan .8s cubic-bezier(.16,1,.3,1) forwards;
+}
+@keyframes card-scan {
+  0%   { transform: translateY(-105%); opacity: 1; }
+  80%  { transform: translateY(240%);  opacity: .4; }
+  100% { transform: translateY(265%);  opacity: 0; }
+}
+
+/* Form value reveal — slide in from right, staggered (Card 1) */
+@keyframes val-in {
+  from { opacity: 0; transform: translateX(10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.howto__card.visible .hwp__val {
+  animation: val-in .38s cubic-bezier(.16,1,.3,1) both;
+}
+.howto__card.visible .hwp__field:nth-child(1) .hwp__val { animation-delay: .3s; }
+.howto__card.visible .hwp__field:nth-child(2) .hwp__val { animation-delay: .44s; }
+.howto__card.visible .hwp__field:nth-child(3) .hwp__val { animation-delay: .58s; }
+
+/* Dot leader draw-in from left (Card 1) */
+.hwp__leader { transform-origin: left center; }
+@keyframes leader-grow {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 1; }
+}
+.howto__card.visible .hwp__leader {
+  animation: leader-grow .48s cubic-bezier(.16,1,.3,1) both;
+}
+.howto__card.visible .hwp__field:nth-child(1) .hwp__leader { animation-delay: .24s; }
+.howto__card.visible .hwp__field:nth-child(2) .hwp__leader { animation-delay: .38s; }
+.howto__card.visible .hwp__field:nth-child(3) .hwp__leader { animation-delay: .52s; }
+
+/* Stamp entrance — scales in like a rubber stamp (Card 3) */
+.hwp__stamp {
+  opacity: 0;
+  transform: rotate(-14deg) scale(0);
+}
+@keyframes stamp-in {
+  0%   { transform: rotate(-14deg) scale(0);    opacity: 0; }
+  60%  { transform: rotate(-14deg) scale(1.18); opacity: 1; }
+  100% { transform: rotate(-14deg) scale(1);    opacity: 1; }
+}
+.howto__card--finale.visible .hwp__stamp {
+  animation: stamp-in .44s cubic-bezier(.16,1,.3,1) .52s both;
 }
 
 /* ─── FAQ ─────────────────────────────────────────── */
@@ -1563,7 +1703,7 @@ body {
   .logos__label { display: none; }
 
   .howto { padding: 52px 20px 64px; }
-  .howto__card-bg-num { font-size: 80px; }
+  .howto__card-num { font-size: 52px; }
   .howto__card-title { font-size: 20px; }
   .faq { padding: 52px 20px; }
   .faq__q { font-size: 14px; }

@@ -355,6 +355,46 @@ function HeroHeadline() {
   );
 }
 
+/* ── Animated toggle sequence for Card 2 ────────────── */
+function AnimatedToggles() {
+  const ref = useRef(null);
+  const [phase, setPhase] = useState(0); // 0=all off, 1=first on, 2=both on
+
+  useEffect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) { setPhase(2); return; }
+    const el = ref.current;
+    if (!el) return;
+    let t1, t2;
+    const obs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        t1 = setTimeout(() => setPhase(1), 420);
+        t2 = setTimeout(() => setPhase(2), 740);
+        obs.disconnect();
+      }
+    }, { threshold: 0.4 });
+    obs.observe(el);
+    return () => { obs.disconnect(); clearTimeout(t1); clearTimeout(t2); };
+  }, []);
+
+  return (
+    <div ref={ref} className="howto__preview howto__preview--toggles">
+      <div className="hwp__field">
+        <span className="hwp__label">Stresstest +2 %</span>
+        <span className={`hwp__switch${phase >= 1 ? ' hwp__switch--on' : ''}`} aria-hidden="true" />
+      </div>
+      <div className="hwp__field">
+        <span className="hwp__label">KfW 300</span>
+        <span className={`hwp__switch${phase >= 2 ? ' hwp__switch--on' : ''}`} aria-hidden="true" />
+      </div>
+      <div className="hwp__field hwp__field--last">
+        <span className="hwp__label">Vergleichsmodus</span>
+        <span className="hwp__switch" aria-hidden="true" />
+      </div>
+    </div>
+  );
+}
+
 export default function LandingPage() {
   useReveal();
 
@@ -526,19 +566,29 @@ export default function LandingPage() {
 
             {/* STEP 1 */}
             <div className="howto__card" data-reveal data-delay="1">
-              <div className="howto__card-bg-num">01</div>
-              <div className="howto__card-inner">
-                <div className="howto__card-top">
-                  <span className="howto__tag">60 Sekunden</span>
-                </div>
+              <div className="howto__card-head">
+                <span className="howto__card-num">01</span>
+                <span className="howto__card-tag">60 Sekunden</span>
               </div>
               <div className="howto__preview howto__preview--form">
-                <div className="hwp__field"><span className="hwp__label">Adresse</span><span className="hwp__val">Maxvorstadt 14B</span></div>
-                <div className="hwp__field"><span className="hwp__label">Kaufpreis</span><span className="hwp__val">620.000 €</span></div>
-                <div className="hwp__field"><span className="hwp__label">Eigenkapital</span><span className="hwp__val hwp__val--gold">20 %</span></div>
+                <div className="hwp__field">
+                  <span className="hwp__label">Adresse</span>
+                  <span className="hwp__leader" aria-hidden="true" />
+                  <span className="hwp__val">Maxvorstadt 14B</span>
+                </div>
+                <div className="hwp__field">
+                  <span className="hwp__label">Kaufpreis</span>
+                  <span className="hwp__leader" aria-hidden="true" />
+                  <span className="hwp__val">620.000 €</span>
+                </div>
+                <div className="hwp__field hwp__field--last">
+                  <span className="hwp__label">Eigenkapital</span>
+                  <span className="hwp__leader" aria-hidden="true" />
+                  <span className="hwp__val hwp__val--gold">20 %</span>
+                </div>
               </div>
-              <div className="howto__card-inner">
-                <div className="howto__step-label">Schritt 01</div>
+              <div className="howto__card-body">
+                <span className="howto__step-label">Schritt 01</span>
                 <h3 className="howto__card-title">Objekt eingeben</h3>
                 <p className="howto__card-desc">Adresse, Kaufpreis und Eigenkapital — fertig. Dauert unter 60 Sekunden.</p>
               </div>
@@ -550,19 +600,13 @@ export default function LandingPage() {
 
             {/* STEP 2 */}
             <div className="howto__card" data-reveal data-delay="2">
-              <div className="howto__card-bg-num">02</div>
-              <div className="howto__card-inner">
-                <div className="howto__card-top">
-                  <span className="howto__tag">Live-Vorschau</span>
-                </div>
+              <div className="howto__card-head">
+                <span className="howto__card-num">02</span>
+                <span className="howto__card-tag">Live-Vorschau</span>
               </div>
-              <div className="howto__preview howto__preview--toggles">
-                <div className="hwp__toggle"><span>Stresstest +2%</span><span className="hwp__chip hwp__chip--on">AN</span></div>
-                <div className="hwp__toggle"><span>KfW 300</span><span className="hwp__chip hwp__chip--on">AN</span></div>
-                <div className="hwp__toggle"><span>Vergleichsmodus</span><span className="hwp__chip">AUS</span></div>
-              </div>
-              <div className="howto__card-inner">
-                <div className="howto__step-label">Schritt 02</div>
+              <AnimatedToggles />
+              <div className="howto__card-body">
+                <span className="howto__step-label">Schritt 02</span>
                 <h3 className="howto__card-title">Analyse anpassen</h3>
                 <p className="howto__card-desc">Stresstest, KfW-Förderung, Szenarien — ein Klick je Einstellung. Sofort live.</p>
               </div>
@@ -573,25 +617,33 @@ export default function LandingPage() {
             </div>
 
             {/* STEP 3 */}
-            <div className="howto__card" data-reveal data-delay="3">
-              <div className="howto__card-bg-num">03</div>
-              <div className="howto__card-inner">
-                <div className="howto__card-top">
-                  <span className="howto__tag howto__tag--gold">Bankfertig</span>
-                </div>
+            <div className="howto__card howto__card--finale" data-reveal data-delay="3">
+              <div className="howto__card-head">
+                <span className="howto__card-num howto__card-num--gold">03</span>
+                <span className="howto__card-tag howto__card-tag--gold">Bankfertig</span>
               </div>
               <div className="howto__preview howto__preview--pdf">
-                <div className="hwp__pdf-icon">
-                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" strokeWidth="1.6"/><polyline points="14 2 14 8 20 8" stroke="currentColor" strokeWidth="1.6"/><line x1="9" y1="13" x2="15" y2="13" stroke="currentColor" strokeWidth="1.4"/><line x1="9" y1="17" x2="13" y2="17" stroke="currentColor" strokeWidth="1.4"/></svg>
+                <div className="hwp__stamp" aria-hidden="true">✓</div>
+                <div className="hwp__doc-preview">
+                  <div className="hwp__doc-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" strokeWidth="1.6"/><polyline points="14 2 14 8 20 8" stroke="currentColor" strokeWidth="1.6"/></svg>
+                  </div>
+                  <div className="hwp__doc-lines">
+                    <span className="hwp__line hwp__line--wide" />
+                    <span className="hwp__line" />
+                    <span className="hwp__line hwp__line--mid" />
+                  </div>
                 </div>
-                <div className="hwp__pdf-meta">
+                <div className="hwp__doc-info">
                   <div className="hwp__pdf-name">Analyse_Maxvorstadt.pdf</div>
-                  <div className="hwp__pdf-size">2,4 MB · Bereit</div>
+                  <div className="hwp__pdf-badge">
+                    <span className="hwp__badge-dot" />
+                    Bankfertig · 2,4 MB
+                  </div>
                 </div>
-                <div className="hwp__download">↓</div>
               </div>
-              <div className="howto__card-inner">
-                <div className="howto__step-label">Schritt 03</div>
+              <div className="howto__card-body">
+                <span className="howto__step-label">Schritt 03</span>
                 <h3 className="howto__card-title">PDF exportieren &amp; abschließen</h3>
                 <p className="howto__card-desc">Bankfertiger Bericht, sofort überzeugend. Kein Nacharbeiten, kein Warten.</p>
               </div>
